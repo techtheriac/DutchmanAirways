@@ -110,11 +110,7 @@ namespace FlyingDutchmanAirlines.DatabaseLayer
                     .WithMany(p => p.FlightOriginNavigations)
                     .HasForeignKey(d => d.Origin)
                     .OnDelete(DeleteBehavior.ClientSetNull);
-            });
-
-            OnModelCreatingPartial(modelBuilder);
-        }
-
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+            });            
+        }        
     }
 }

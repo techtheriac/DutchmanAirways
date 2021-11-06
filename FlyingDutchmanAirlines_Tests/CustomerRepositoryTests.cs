@@ -10,6 +10,8 @@ namespace FlyingDutchmanAirlines_Tests
     public class CustomerRepositoryTests
     {
         private FlyingDutchmanAirlinesContext _context;
+        private CustomerRepository _repository;
+
 
         [TestInitialize]
         public void TestInitialize()
@@ -19,35 +21,29 @@ namespace FlyingDutchmanAirlines_Tests
                 .UseInMemoryDatabase("FlyingDutchman").Options;
 
             _context = new FlyingDutchmanAirlinesContext(dbContextOptions);
+            _repository = new CustomerRepository(_context);
+
+            Assert.IsNotNull(_repository);
         }
 
         [TestMethod]
         public async Task CreateCustomer_Success()
         {
-            CustomerRepository repository = new CustomerRepository();
-            Assert.IsNotNull(repository);
-
-            bool result = await repository.CreateCustomer("Franklin Jezreel");
+            bool result = await _repository.CreateCustomer("Franklin Jezreel");
             Assert.IsTrue(result);
         }
 
         [TestMethod]
         public async Task CreateCustomer_Failure_NameIsNull()
-        {
-            CustomerRepository repository = new CustomerRepository();
-            Assert.IsNotNull(repository);
-
-            bool result = await repository.CreateCustomer(null);
+        {           
+            bool result = await _repository.CreateCustomer(null);
             Assert.IsFalse(result);
         }
-
+        
         [TestMethod]
         public async Task CreateCustomer_Failure_NameIsEmpty()
-        {
-            CustomerRepository repository = new CustomerRepository();
-            Assert.IsNotNull(repository);
-
-            bool result = await repository.CreateCustomer("");
+        {            
+            bool result = await _repository.CreateCustomer("");
             Assert.IsFalse(result);
         }
 
@@ -58,11 +54,18 @@ namespace FlyingDutchmanAirlines_Tests
         [DataRow('&')]
         [DataRow('*')]
         public async Task CreateCustomer_Failure_NameContainsInvalidCharacter(char invalidCharacter)
+        {            
+            bool result = await _repository.CreateCustomer("Franklin Jezreel " + invalidCharacter);
+            Assert.IsFalse(result);
+        }
+       
+        [TestMethod]
+        public async Task CreateCustomer_Failure_DatabaseAccessError()
         {
-            CustomerRepository repository = new CustomerRepository();
+            CustomerRepository repository = new CustomerRepository(null);
             Assert.IsNotNull(repository);
 
-            bool result = await repository.CreateCustomer("Franklin Jezreel " + invalidCharacter);
+            bool result = await repository.CreateCustomer("Franklin Jezreel");
             Assert.IsFalse(result);
         }
     }

@@ -1,5 +1,6 @@
 ﻿using FlyingDutchmanAirlines.DatabaseLayer;
 using FlyingDutchmanAirlines.RepositoryLayer;
+using FlyingDutchmanAirlines_Tests.Stubs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -23,7 +24,7 @@ namespace FlyingDutchmanAirlines_Tests
                 new DbContextOptionsBuilder<FlyingDutchmanAirlinesContext>()
                 .UseInMemoryDatabase("FlyingDutchman").Options;
 
-            _context = new FlyingDutchmanAirlinesContext(dbContextOptions);            
+            _context = new FlyingDutchmanAirlinesContext_Stub(dbContextOptions);            
 
             _repository = new BookingRepository(_context);
             Assert.IsNotNull(_repository);
@@ -33,6 +34,16 @@ namespace FlyingDutchmanAirlines_Tests
         public void CreateBooking_Success()
         {
 
+        }
+
+        [TestMethod]
+        [DataRow(-1, 0)]
+        [DataRow(0, -1)]
+        [DataRow(-1, -1)]
+        [ExpectedException(typeof(ArgumentException))]
+        public async Task CreateBooking_Failure_InvalidInputs(int customerId, int flightNumber)
+        {
+            await _repository.CreateBooking(customerId, flightNumber);
         }
     }
 }

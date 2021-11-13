@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "KWOEMIHdybhNJBVhPYXy0OqSvFYX7XzIfQUV1MErPWztdyARhPIssNTjjFwGyteKMdzbRuzIYJaOnzArjMJ1JQ==",
+  "dgSpecHash": "zGxENqh2GkiYISkKg5hdt5sQAPJfexT5HhUD67f/Wn3eXJ3Z1ZrjII1eiA72/199JxjYj20nny2UqL7pVwW00A==",
   "success": true,
   "projectFilePath": "C:\\Users\\hp\\source\\repos\\FlyingDutchmanAirlinesNextGen\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines.csproj",
   "expectedPackageFiles": [
@@ -100,7 +100,7 @@
     "C:\\Users\\hp\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
     "C:\\Users\\hp\\.nuget\\packages\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
     "C:\\Users\\hp\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
-    "C:\\Users\\hp\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.8\\microsoft.netcore.app.host.win-x64.5.0.8.nupkg.sha512"
+    "C:\\Users\\hp\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.12\\microsoft.netcore.app.host.win-x64.5.0.12.nupkg.sha512"
   ],
   "logs": []
 }

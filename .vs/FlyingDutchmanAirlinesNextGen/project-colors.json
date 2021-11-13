@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "80c230a0-ed71-4c8c-87ab-a7577bcc2f18": {
+      "ProjectGuid": "80c230a0-ed71-4c8c-87ab-a7577bcc2f18",
+      "DisplayName": "FlyingDutchmanAirlines",
+      "ColorIndex": 0
+    },
+    "8e33615b-16ca-4d93-bb02-855cc81f9439": {
+      "ProjectGuid": "8e33615b-16ca-4d93-bb02-855cc81f9439",
+      "DisplayName": "FlyingDutchmanAirlines_Tests",
+      "ColorIndex": 1
+    }
+  },
+  "NextColorIndex": 2
+}

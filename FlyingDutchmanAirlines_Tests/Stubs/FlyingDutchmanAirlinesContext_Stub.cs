@@ -1,6 +1,8 @@
 ﻿using FlyingDutchmanAirlines.DatabaseLayer;
+using FlyingDutchmanAirlines.DatabaseLayer.Models;
 using FlyingDutchmanAirlines.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,16 +19,28 @@ namespace FlyingDutchmanAirlines_Tests.Stubs
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            // Exceptions are devoid of type signatures
-            Func<Task<int>>[] functions =
-            {
-                () => throw new Exception("Database Error!"),
-                async () => await base.SaveChangesAsync(cancellationToken),
-            };
+            IEnumerable<EntityEntry> pendingChanges = ChangeTracker.Entries()
+                .Where(e => e.State == EntityState.Added);
+            IEnumerable<Booking> bookings = pendingChanges
+                .Select(e => e.Entity).OfType<Booking>();
 
-            return await functions[(int)base.Bookings.First().CustomerId].Invoke();
+            if(bookings.Any(b => b.CustomerId != 1))
+            {
+                throw new Exception("Database Error!");
+            }
+
+
+            await base.SaveChangesAsync(cancellationToken);
+
+            return 1;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using FlyingDutchmanAirlines.DatabaseLayer;
 using FlyingDutchmanAirlines.RepositoryLayer;
+using FlyingDutchmanAirlines.Exceptions;
 using FlyingDutchmanAirlines_Tests.Stubs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FlyingDutchmanAirlines.DatabaseLayer.Models;
 
 namespace FlyingDutchmanAirlines_Tests
 {
@@ -31,9 +33,14 @@ namespace FlyingDutchmanAirlines_Tests
         }
 
         [TestMethod]
-        public void CreateBooking_Success()
+        public async Task CreateBooking_Success()
         {
+            await _repository.CreateBooking(1, 0);
 
+            Booking booking = _context.Bookings.First();
+            Assert.IsNotNull(booking);
+            Assert.AreEqual(1, booking.CustomerId);
+            Assert.AreEqual(0, booking.FlightNumber);
         }
 
         [TestMethod]
@@ -44,6 +51,13 @@ namespace FlyingDutchmanAirlines_Tests
         public async Task CreateBooking_Failure_InvalidInputs(int customerId, int flightNumber)
         {
             await _repository.CreateBooking(customerId, flightNumber);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(CouldNotAddBookingToDatabaseException))]
+        public async Task CreateBooking_Failure_DatabseError()
+        {
+            await _repository.CreateBooking(0, 1);
         }
     }
 }
